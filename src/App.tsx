@@ -55,6 +55,35 @@ const digitalShapes: Point[][][] = [
     [[50,85],[50,85],[50,85],[50,85],[50,85],[50,85],[50,85],[50,85],[50,85]]
   ]
 ];
+// New final chapters: portfolio, process and conversation.
+const finalShapes: Point[][][] = [
+  // Projects: stacked portfolio cards and a central showcase.
+  [
+    [[15,24],[67,24],[67,73],[15,73],[15,24],[15,24],[15,24],[15,24],[15,24]],
+    [[29,14],[81,14],[81,63],[29,63],[29,14],[29,14],[29,14],[29,14],[29,14]],
+    [[21,32],[61,32],[61,57],[21,57],[21,32],[21,32],[21,32],[21,32],[21,32]],
+    [[22,64],[48,64],[48,64],[48,64],[48,64],[48,64],[48,64],[48,64],[48,64]],
+    [[57,82],[84,82],[84,82],[84,82],[84,82],[84,82],[84,82],[84,82],[84,82]]
+  ],
+  // Process: a four-step connected roadmap with a central route.
+  [
+    [[12,50],[35,50],[58,50],[86,50],[86,50],[86,50],[86,50],[86,50],[86,50]],
+    [[12,50],[12,31],[12,31],[12,31],[12,31],[12,31],[12,31],[12,31],[12,31]],
+    [[35,50],[35,70],[35,70],[35,70],[35,70],[35,70],[35,70],[35,70],[35,70]],
+    [[58,50],[58,31],[58,31],[58,31],[58,31],[58,31],[58,31],[58,31],[58,31]],
+    [[86,50],[86,70],[86,70],[86,70],[86,70],[86,70],[86,70],[86,70],[86,70]]
+  ],
+  // Contact: conversation bubble and send arrow.
+  [
+    [[13,19],[87,19],[87,72],[58,72],[43,88],[43,72],[13,72],[13,19],[13,19]],
+    [[26,37],[72,37],[72,37],[72,37],[72,37],[72,37],[72,37],[72,37],[72,37]],
+    [[26,48],[62,48],[62,48],[62,48],[62,48],[62,48],[62,48],[62,48],[62,48]],
+    [[26,59],[50,59],[50,59],[50,59],[50,59],[50,59],[50,59],[50,59],[50,59]],
+    [[63,56],[77,43],[77,43],[77,43],[77,43],[77,43],[77,43],[77,43],[77,43]]
+  ]
+];
+const allDigitalShapes=[...digitalShapes,...finalShapes];
+const digitalLabels=['DIGITAL CORE','WEB','SOFTWARE','IA','APPS','PROJETOS','PROCESSO','CONTACTO'];
 const clamp01=(n:number)=>Math.min(1,Math.max(0,n));
 const lerp=(a:number,b:number,t:number)=>a+(b-a)*t;
 function DigitalCore(){
@@ -67,20 +96,19 @@ function DigitalCore(){
     const update=()=>{
       raf=0;
       const hero=document.getElementById('inicio');
-      const sections=['websites','software','automacao','apps'].map(id=>document.getElementById(id));
-      const services=document.getElementById('solucoes');
-      if(!hero||!services||sections.some(x=>!x))return;
+      const ids=['websites','software','automacao','apps','projetos','processo','contacto'];
+      const sections=ids.map(id=>document.getElementById(id));
+      if(!hero||sections.some(x=>!x))return;
       const y=window.scrollY+window.innerHeight*.52;
       const heroEnd=hero.getBoundingClientRect().bottom+window.scrollY;
       const centers=sections.map(el=>{const r=el!.getBoundingClientRect();return r.top+window.scrollY+r.height*.5});
-      // Hold each finished icon through most of its section; morph near the next section.
       let progress=0;
       const first=centers[0];
       const firstStart=heroEnd-window.innerHeight*.12;
       if(y<first){progress=clamp01((y-firstStart)/(first-firstStart||1));}
       else {
-        progress=4;
-        for(let i=0;i<3;i++){
+        progress=7;
+        for(let i=0;i<centers.length-1;i++){
           const a=centers[i], b=centers[i+1], gap=b-a;
           if(y<b){
             const transitionStart=a+gap*.62;
@@ -91,10 +119,9 @@ function DigitalCore(){
       }
       setStage(progress);
       setHeroMode(window.scrollY<heroEnd-window.innerHeight*.25);
-      const last=sections[3]!;
-      const lastEnd=last.getBoundingClientRect().bottom+window.scrollY;
-      setVisible(window.innerWidth>=1100 && y<lastEnd+window.innerHeight*.12);
-
+      const contact=sections[6]!;
+      const contactEnd=contact.getBoundingClientRect().bottom+window.scrollY;
+      setVisible(window.innerWidth>=1100 && window.scrollY < contactEnd-window.innerHeight*.06);
     };
     const onScroll=()=>{if(!raf)raf=requestAnimationFrame(update)};
     update();
@@ -102,9 +129,9 @@ function DigitalCore(){
     window.addEventListener('resize',onScroll);
     return()=>{window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll);cancelAnimationFrame(raf)};
   },[]);
-  const index=Math.min(3,Math.floor(stage)), t=reduce?Math.round(stage-index):stage-index;
-  const paths=digitalShapes[index].map((points,i)=>{
-    const next=digitalShapes[index+1][i];
+  const index=Math.min(6,Math.floor(stage)), t=reduce?Math.round(stage-index):stage-index;
+  const paths=allDigitalShapes[index].map((points,i)=>{
+    const next=allDigitalShapes[index+1][i];
     return 'M '+points.map((p,j)=>{
       const x=lerp(p[0],next[j][0],t), y=lerp(p[1],next[j][1],t);
       return `${x.toFixed(2)} ${y.toFixed(2)}`;
@@ -138,11 +165,28 @@ function DigitalCore(){
         {([[20,43],[35,36],[45,46],[30,61],[43,73],[58,64],[73,73],[80,49],[64,35]] as Point[]).map(([x,y],i)=><circle key={i} cx={x} cy={y} r={i%3===0?2.2:1.4} fill="#BCE5FF" className="digital-core-neuron"/>)}
         <path d="M50 19 V80" stroke="#C4E9FF" strokeWidth=".9" strokeDasharray="2 4" opacity=".5"/>
       </g>
+      <g style={{opacity:clamp01(1-Math.abs(stage-5)*3)}}>
+        <rect x="23" y="34" width="36" height="21" rx="1.5" fill="#234676" opacity=".55"/>
+        <path d="M25 51 L35 42 L42 47 L49 38 L57 48" stroke="#B2DCFF" strokeWidth="1.3" fill="none"/>
+        <circle cx="51" cy="38" r="2" fill="#B2DCFF"/>
+        <path d="M23 61 H44 M23 66 H38" stroke="#91BEFF" strokeWidth="1.6" strokeLinecap="round"/>
+      </g>
+      <g style={{opacity:clamp01(1-Math.abs(stage-6)*3)}}>
+        {([12,35,58,86] as number[]).map((x,i)=><g key={i}>
+          <circle cx={x} cy="50" r="6" fill="#17315C" stroke="#A1D1FF" strokeWidth="1.3"/>
+          <text x={x} y="52.4" textAnchor="middle" fontSize="6.3" fill="#CBE9FF">{i+1}</text>
+        </g>)}
+        <path d="M80 46 L87 50 L80 54" stroke="#BCE2FF" strokeWidth="1.4" fill="none"/>
+      </g>
+      <g style={{opacity:clamp01(1-Math.abs(stage-7)*3)}}>
+        <path d="M70 44 L77 43 L76 50" fill="none" stroke="#C2E8FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="21" cy="26" r="1.4" fill="#A7D5FF"/>
+      </g>
       <path d={paths[4]} className="digital-core-energy" fill="none" stroke="#C8E8FF" strokeWidth="1.5" strokeDasharray="2 14" strokeLinecap="round"/>
       {aiNodes.map((p,i)=><circle key={i} cx={p[0]} cy={p[1]} r={i%3===0?2.2:1.6} fill="#C2E8FF" opacity={aiAlpha} className="digital-core-neuron"/>)}
       <circle cx="50" cy="50" r="2.2" fill="#A6D2FF" opacity={Math.max(0,1-stage*2)}/>
     </svg>
-    <span className="digital-core-caption">{['DIGITAL CORE','WEB','SOFTWARE','IA','APPS'][Math.round(stage)]}</span>
+    <span className="digital-core-caption">{digitalLabels[Math.round(stage)]}</span>
   </div>;
 }
 

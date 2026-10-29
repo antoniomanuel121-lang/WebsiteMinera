@@ -1,3 +1,13 @@
+## v0.5.3 — Digital Core até ao final da página · 29/10/2026
+
+- Estendida a sequência do Digital Core para **Projetos**, **Como trabalhamos** e **Vamos conversar**.
+- Projetos: cartões de portefólio sobrepostos e imagem de apresentação.
+- Como trabalhamos: percurso de quatro etapas numeradas, interligadas.
+- Vamos conversar: balão de conversa com linhas de mensagem e seta de envio.
+- Mantidas as cinco formas anteriores, a transformação contínua e reversível, os efeitos do Core e os anéis originais do Hero.
+- O Digital Core permanece visível até à secção de contacto, desaparecendo perto do rodapé.
+- Sem alterações ao comportamento mobile (Core oculto em ecrãs inferiores a 1100 px).
+
 ## v0.5.2 — Digital Core: formas mais claras · 29/10/2026
 
 - **Website:** barra superior com pontos de janela e campo de URL estilizado (`www.` e traços ilegíveis), mantendo a estrutura de browser.
