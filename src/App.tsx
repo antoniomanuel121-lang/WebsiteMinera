@@ -59,6 +59,9 @@ function OrbitalJourney(){
     const hero=document.getElementById('inicio');
     const services=document.getElementById('solucoes');
     if(!el||!hero||!services)return;
+    // Keep narrowed, non-null references inside the animation callback.
+    const orbitalElement: HTMLDivElement = el;
+    const servicesSection: HTMLElement = services;
     const desktop=window.matchMedia('(min-width:1100px)');
     const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
     const paths=Array.from(el.querySelectorAll<SVGPathElement>('[data-orbit]'));
@@ -71,20 +74,20 @@ function OrbitalJourney(){
       const y=window.scrollY,vh=window.innerHeight,vw=window.innerWidth;
       // Long, reversible transition. The rings remain on screen beyond the Hero.
       const start=vh*.18;
-      const end=Math.max(start+vh*1.6,services.offsetTop+vh*.72);
+      const end=Math.max(start+vh*1.6,servicesSection.offsetTop+vh*.72);
       const p=clamp((y-start)/(end-start));
       const travel=smooth(p);
       const maxWidth=Math.min(1480,vw-112);
       const left=(vw-maxWidth)/2;
       const x0=vw*.73,y0=vh*.48;
       const x1=left+112,y1=vh*.47;
-      el.style.left=`${x0+(x1-x0)*travel}px`;
-      el.style.top=`${y0+(y1-y0)*travel}px`;
-      el.style.transform=`translate(-50%,-50%) scale(${1-.43*travel})`;
+      orbitalElement.style.left=`${x0+(x1-x0)*travel}px`;
+      orbitalElement.style.top=`${y0+(y1-y0)*travel}px`;
+      orbitalElement.style.transform=`translate(-50%,-50%) scale(${1-.43*travel})`;
       const software=document.getElementById('software');
       const disappear=software?clamp((y-(software.offsetTop+vh*.2))/(vh*.7)):0;
-      el.style.opacity=String(1-disappear);
-      el.style.setProperty('--orbit-volume',String(1-smooth(p*1.45)));
+      orbitalElement.style.opacity=String(1-disappear);
+      orbitalElement.style.setProperty('--orbit-volume',String(1-smooth(p*1.45)));
       paths.forEach((path,i)=>path.setAttribute('d',pathAt(i,p)));
       glows.forEach((path,i)=>path.setAttribute('d',pathAt(i,p)));
     }

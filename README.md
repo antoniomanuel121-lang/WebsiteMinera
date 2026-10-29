@@ -1,3 +1,9 @@
+## v0.4.2.1 — Correção de compilação (29/10/2026)
+
+- Corrigidos os avisos de TypeScript sobre referências potencialmente nulas (`el` e `services`) na animação Orbital Journey.
+- Sem alterações intencionais ao design ou à animação da v0.4.2.
+- Publicação: carregar o conteúdo de `minera-site` na raiz do repositório e verificar GitHub Actions.
+
 # MINERA — Website
 
 ## v0.4.1 — 29/10/2026 · Orbital Morph Prototype
