@@ -1,3 +1,12 @@
+## v0.5 — Digital Core (experimental) · 29/10/2026
+
+- Partindo da v0.3.3, preservámos integralmente os anéis originais, a luz do cursor, a grelha e os botões magnéticos.
+- Novo elemento independente à esquerda, persistente durante o scroll em desktop.
+- As **mesmas três trajetórias SVG** mudam continuamente entre Digital Core, browser, módulos de software, rede de IA e smartphone, com progresso reversível ao subir.
+- Adicionados IDs reais às quatro áreas de serviço para sincronização com o scroll.
+- Em ecrãs inferiores a 1100 px, o Digital Core é ocultado para não obstruir os conteúdos.
+- Demonstração experimental: podemos ajustar escala, posicionamento e ritmo após testar no browser.
+
 # MINERA — Website
 
 ## Histórico de versões

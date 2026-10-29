@@ -108,3 +108,21 @@
 @media (min-width: 1500px) { .hero-v2-sculpture { right: -5%; } }
 @media (max-width: 900px) { :root { --minera-page-gutter: 28px; } .service-row { gap: 28px; } }
 @media (max-width: 720px) { :root { --minera-page-gutter: 20px; } .service-row { grid-template-columns: 1fr; } .service-row.reverse .service-copy, .service-row.reverse .service-art { order: initial; } }
+
+/* v0.5 — independent, scroll-morphing Digital Core; original Hero rings untouched. */
+.digital-core {
+  position:fixed; left:clamp(16px,3.5vw,65px); top:46%;
+  width:clamp(104px,10vw,158px); aspect-ratio:1;
+  z-index:12; pointer-events:none; opacity:0;
+  transform:translate3d(-18px,-50%,0) scale(.92);
+  transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1);
+  filter:drop-shadow(0 0 14px rgba(48,114,242,.24));
+}
+.digital-core-visible {opacity:.88;transform:translate3d(0,-50%,0) scale(1)}
+.digital-core-hero {opacity:.55}
+.digital-core-svg {position:relative;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 5px rgba(78,148,255,.32))}
+.digital-core-aura {position:absolute;inset:-24%;border-radius:50%;background:radial-gradient(circle,rgba(52,111,229,.12),transparent 65%);animation:digital-core-pulse 5s ease-in-out infinite}
+.digital-core-caption {position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:9px;letter-spacing:.24em;color:#7e9ed2;font-weight:700;margin-top:8px}
+@keyframes digital-core-pulse {50%{opacity:.5;transform:scale(1.07)}}
+@media (max-width:1099px){.digital-core{display:none}}
+@media (prefers-reduced-motion:reduce){.digital-core-aura{animation:none}.digital-core{transition:none}}

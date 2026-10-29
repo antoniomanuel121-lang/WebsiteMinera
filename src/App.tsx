@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowUpRight, ArrowRight, Menu, X, Globe2, Layers3, Workflow, Smartphone, MoveUpRight, Check, Mail, ExternalLink } from 'lucide-react';
 
@@ -9,6 +9,98 @@ const offerings = [
   {number:'04', label:'PRODUTOS DIGITAIS', title:'Da ideia ao ecrã.', desc:'Tem uma ideia para uma aplicação? Ajudamos a transformá-la num produto intuitivo, útil e pronto para evoluir.', tags:['Aplicações móveis','MVPs','Produtos digitais'], icon:Smartphone, id:'apps'}
 ];
 
+
+/* Persistent Digital Core: a single set of animated strokes morphs through all four services.
+   It is separate from the original Hero rings, which are intentionally unchanged. */
+type Point = [number, number];
+const digitalShapes: Point[][][] = [
+  // Core: three faceted, orbit-like paths.
+  [
+    [[50,7],[76,17],[93,44],[83,77],[50,94],[18,78],[7,48],[22,19],[50,7]],
+    [[50,7],[50,94],[7,48],[93,44],[50,7],[18,78],[83,77],[50,94],[50,7]],
+    [[22,19],[76,17],[83,77],[18,78],[22,19],[50,46],[93,44],[50,94],[22,19]]
+  ],
+  // Websites: browser outline, top bar, page structure.
+  [
+    [[9,18],[91,18],[91,83],[9,83],[9,18],[9,18],[9,18],[9,18],[9,18]],
+    [[9,32],[91,32],[91,32],[91,32],[91,32],[91,32],[91,32],[91,32],[91,32]],
+    [[18,44],[52,44],[52,53],[18,53],[18,44],[61,44],[81,44],[81,71],[61,71]]
+  ],
+  // Software: connected system modules.
+  [
+    [[9,18],[44,18],[44,43],[9,43],[9,18],[56,57],[91,57],[91,84],[56,84]],
+    [[50,7],[50,32],[50,32],[50,32],[50,32],[50,69],[50,69],[50,69],[50,69]],
+    [[9,60],[42,60],[42,86],[9,86],[9,60],[58,13],[91,13],[91,39],[58,39]]
+  ],
+  // AI and automation: connected neural nodes.
+  [
+    [[13,50],[35,18],[62,29],[87,9],[74,59],[93,85],[55,91],[35,65],[13,50]],
+    [[13,50],[35,65],[62,29],[74,59],[35,18],[55,91],[87,9],[93,85],[13,50]],
+    [[35,18],[13,50],[55,91],[93,85],[74,59],[87,9],[62,29],[35,65],[35,18]]
+  ],
+  // Apps: phone outline, speaker and screen controls.
+  [
+    [[29,6],[71,6],[77,12],[77,88],[71,94],[29,94],[23,88],[23,12],[29,6]],
+    [[42,15],[58,15],[58,15],[58,15],[58,15],[58,15],[58,15],[58,15],[58,15]],
+    [[33,32],[67,32],[67,59],[33,59],[33,32],[34,70],[66,70],[66,78],[34,78]]
+  ]
+];
+const clamp01=(n:number)=>Math.min(1,Math.max(0,n));
+const lerp=(a:number,b:number,t:number)=>a+(b-a)*t;
+function DigitalCore(){
+  const [stage,setStage]=useState(0);
+  const [visible,setVisible]=useState(false);
+  const [heroMode,setHeroMode]=useState(true);
+  const reduce=useReducedMotion();
+  useEffect(()=>{
+    let raf=0;
+    const update=()=>{
+      raf=0;
+      const hero=document.getElementById('inicio');
+      const sections=['websites','software','automacao','apps'].map(id=>document.getElementById(id));
+      const services=document.getElementById('solucoes');
+      if(!hero||!services||sections.some(x=>!x))return;
+      const y=window.scrollY+window.innerHeight*.54;
+      const heroEnd=hero.offsetTop+hero.offsetHeight;
+      const bounds=[heroEnd-window.innerHeight*.30,...sections.map(x=>x!.getBoundingClientRect().top+window.scrollY+Math.min(x!.offsetHeight*.42,window.innerHeight*.36))];
+      let progress=0;
+      if(y>=bounds[4])progress=4;
+      else if(y>bounds[0]){
+        for(let i=0;i<4;i++)if(y<=bounds[i+1]){
+          progress=i+clamp01((y-bounds[i])/(bounds[i+1]-bounds[i]||1));
+          break;
+        }
+      }
+      setStage(progress);
+      setHeroMode(window.scrollY<heroEnd-window.innerHeight*.25);
+      const last=sections[3]!;
+      setVisible(window.innerWidth>=1100 && window.scrollY+window.innerHeight*.7 < last.getBoundingClientRect().bottom+window.scrollY && window.scrollY<heroEnd+services.offsetHeight);
+    };
+    const onScroll=()=>{if(!raf)raf=requestAnimationFrame(update)};
+    update();
+    window.addEventListener('scroll',onScroll,{passive:true});
+    window.addEventListener('resize',onScroll);
+    return()=>{window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll);cancelAnimationFrame(raf)};
+  },[]);
+  const index=Math.min(3,Math.floor(stage)), t=reduce?Math.round(stage-index):stage-index;
+  const paths=digitalShapes[index].map((points,i)=>{
+    const next=digitalShapes[index+1][i];
+    return 'M '+points.map((p,j)=>{
+      const x=lerp(p[0],next[j][0],t), y=lerp(p[1],next[j][1],t);
+      return `${x.toFixed(2)} ${y.toFixed(2)}`;
+    }).join(' L ');
+  });
+  return <div className={`digital-core ${visible?'digital-core-visible':''} ${heroMode?'digital-core-hero':''}`} aria-hidden="true">
+    <div className="digital-core-aura"/>
+    <svg viewBox="0 0 100 100" className="digital-core-svg">
+      <defs><linearGradient id="digital-core-stroke" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#A9D6FF"/><stop offset=".5" stopColor="#478BFF"/><stop offset="1" stopColor="#2353B7"/></linearGradient></defs>
+      {paths.map((d,i)=><path key={i} d={d} fill="none" stroke="url(#digital-core-stroke)" strokeWidth={i===0?1.65:1.15} strokeLinejoin="round" strokeLinecap="round" opacity={1-i*.15}/>)}
+      <circle cx="50" cy="50" r="2.2" fill="#A6D2FF" opacity={Math.max(0,1-stage*2)}/>
+    </svg>
+    <span className="digital-core-caption">{['DIGITAL CORE','WEB','SOFTWARE','IA','APPS'][Math.round(stage)]}</span>
+  </div>;
+}
+
 function Brand(){return <a className="brand" href="#inicio" aria-label="Minera, voltar ao início">MINERA<span>.</span></a>}
 function Header(){const [open,setOpen]=useState(false);return <header className="header"><div className="nav-shell"><Brand/><nav className={open?'nav-links open':'nav-links'} aria-label="Navegação principal"><a href="#solucoes" onClick={()=>setOpen(false)}>Soluções</a><a href="#projetos" onClick={()=>setOpen(false)}>Projetos</a><a href="#processo" onClick={()=>setOpen(false)}>Como trabalhamos</a><a className="mobile-contact" href="#contacto" onClick={()=>setOpen(false)}>Fale connosco</a></nav><a className="nav-cta" href="#contacto">Vamos conversar <ArrowUpRight size={16}/></a><button className="menu-button" aria-label={open?'Fechar menu':'Abrir menu'} aria-expanded={open} onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button></div></header>}
 const heroServices = [{number:'01',title:'Websites',id:'websites'},{number:'02',title:'Software',id:'software'},{number:'03',title:'IA & Automação',id:'automacao'},{number:'04',title:'Aplicações',id:'apps'}];
@@ -18,9 +110,9 @@ function ServiceVisual({id}:{id:string}){if(id==='websites')return <div classNam
 if(id==='software')return <div className="service-art software-art"><div className="software-panel"><div className="software-heading"><span>◈ &nbsp; Painel de gestão</span><span>● Em dia</span></div><div className="software-stats"><div><small>Pedidos ativos</small><strong>32</strong></div><div><small>Clientes</small><strong>148</strong></div><div><small>Concluídos</small><strong>86%</strong></div></div><div className="software-table"><div><span>PROJETO</span><span>ESTADO</span></div><div><span>Encomenda #1042</span><b>Em curso</b></div><div><span>Encomenda #1041</span><b className="done">Concluído</b></div><div><span>Encomenda #1040</span><b>Em curso</b></div></div></div></div>;
 if(id==='automacao')return <div className="service-art automation-art"><div className="flow-node"><Mail size={19}/><span>Novo pedido</span></div><div className="flow-connector"><span/></div><div className="flow-node flow-center"><Workflow size={20}/><span>Processar</span></div><div className="flow-connector"><span/></div><div className="flow-node"><Check size={19}/><span>Organizado</span></div><div className="flow-caption">UM PROCESSO. ZERO COMPLICAÇÕES.</div></div>;
 return <div className="service-art apps-art"><div className="phone phone-back"><div className="phone-notch"/><div className="phone-label">MINERA</div><div className="phone-card faded"/><div className="phone-card faded short"/></div><div className="phone phone-front"><div className="phone-notch"/><div className="phone-label">A sua app.</div><div className="phone-greeting">Bom dia, Ana 👋</div><div className="phone-card"><small>PRÓXIMA RESERVA</small><strong>Quinta-feira, 15:30</strong><span>Confirmada ✓</span></div><div className="phone-card short"/><div className="phone-card short"/></div></div>}
-function Services(){return <section className="services section" id="solucoes"><div className="container"><div className="section-intro"><div className="section-tag">01 / O QUE FAZEMOS</div><h2>Problemas reais.<br/><span>Soluções que funcionam.</span></h2><p>Não complicamos o que pode ser simples. Descubra como podemos ajudar a sua empresa a crescer.</p></div><div className="services-list">{offerings.map((o,i)=><motion.article key={o.id} className={`service-row ${i%2?'reverse':''}`} initial={{opacity:0,y:25}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.15}} transition={{duration:.55}}><div className="service-copy"><div className="service-index"><span>{o.number} / 04</span><span>{o.label}</span></div><h3>{o.title}</h3><p>{o.desc}</p><div className="service-tags">{o.tags.map(t=><span key={t}>{t}</span>)}</div><a href="#contacto" className="text-link">Vamos falar sobre isto <ArrowUpRight size={17}/></a></div><ServiceVisual id={o.id}/></motion.article>)}</div></div></section>}
+function Services(){return <section className="services section" id="solucoes"><div className="container"><div className="section-intro"><div className="section-tag">01 / O QUE FAZEMOS</div><h2>Problemas reais.<br/><span>Soluções que funcionam.</span></h2><p>Não complicamos o que pode ser simples. Descubra como podemos ajudar a sua empresa a crescer.</p></div><div className="services-list">{offerings.map((o,i)=><motion.article id={o.id} key={o.id} className={`service-row ${i%2?'reverse':''}`} initial={{opacity:0,y:25}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.15}} transition={{duration:.55}}><div className="service-copy"><div className="service-index"><span>{o.number} / 04</span><span>{o.label}</span></div><h3>{o.title}</h3><p>{o.desc}</p><div className="service-tags">{o.tags.map(t=><span key={t}>{t}</span>)}</div><a href="#contacto" className="text-link">Vamos falar sobre isto <ArrowUpRight size={17}/></a></div><ServiceVisual id={o.id}/></motion.article>)}</div></div></section>}
 function Projects(){return <section id="projetos" className="section projects"><div className="container projects-layout"><div><div className="section-tag">02 / PROJETOS</div><h2>Boas ideias merecem<br/><span>boa execução.</span></h2><p>Estamos a preparar a apresentação dos nossos trabalhos. Aqui vais encontrar projetos reais, explicados de forma simples: o desafio, a solução e o resultado.</p><a className="text-link" href="#contacto">Tem um projeto em mente? <ArrowUpRight size={17}/></a></div><div className="projects-preview"><span>EM CONSTRUÇÃO</span><div className="project-symbol">M<span>.</span></div><strong>Os próximos projetos<br/>começam aqui.</strong><small>Portefólio Minera · Brevemente</small></div></div></section>}
 function Process(){return <section className="section process" id="processo"><div className="container"><div className="section-tag">03 / COMO TRABALHAMOS</div><h2>Sem complicações.<br/><span>Do início ao fim.</span></h2><div className="process-grid">{[{n:'01',t:'Ouvimos',d:'Percebemos o seu negócio e o que precisa realmente de resolver.'},{n:'02',t:'Planeamos',d:'Desenhamos uma solução clara, com objetivos e etapas definidas.'},{n:'03',t:'Construímos',d:'Transformamos o plano numa experiência digital funcional.'},{n:'04',t:'Acompanhamos',d:'Testamos, entregamos e ajudamos a evoluir a solução.'}].map(s=><div className="process-step" key={s.n}><span>{s.n}</span><h3>{s.t}</h3><p>{s.d}</p></div>)}</div></div></section>}
 function Contact(){return <section id="contacto" className="contact section"><div className="contact-light"/><div className="container contact-inner"><div className="section-tag">04 / VAMOS CONVERSAR</div><h2>O próximo passo<br/>começa com uma <span>conversa.</span></h2><p>Tem uma ideia, um desafio ou um projeto em mente? Conte-nos o que precisa. Sem termos complicados.</p><a className="btn btn-primary" href="mailto:contacto@exemplo.pt?subject=Projeto%20Minera" onClick={(e)=>{e.preventDefault();alert('O contacto profissional da Minera será adicionado antes do lançamento.');}}>Vamos falar <ArrowUpRight size={18}/></a><div className="contact-note">Contacto profissional a disponibilizar no lançamento.</div></div></section>}
 function Footer(){return <footer className="footer"><div className="container footer-inner"><Brand/><span>TECNOLOGIA PARA NEGÓCIOS REAIS.</span><span>© {new Date().getFullYear()} MINERA · WEBSITE EM DESENVOLVIMENTO</span><a href="#inicio" aria-label="Voltar ao início"><ExternalLink size={16}/></a></div></footer>}
-export default function App(){return <><Header/><main><Hero/><Services/><Projects/><Process/><Contact/></main><Footer/></>}
+export default function App(){return <><Header/><DigitalCore/><main><Hero/><Services/><Projects/><Process/><Contact/></main><Footer/></>}
