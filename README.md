@@ -2,6 +2,14 @@
 
 ## Histórico de versões
 
+### v0.3.2 — 29/10/2026 — Hero / Tipografia & Navegação
+- Introduzida a fonte Satoshi no Hero, com fallback para fontes de sistema.
+- Refinados peso, tamanho, espaçamento e hierarquia do título e da descrição.
+- Removido o seletor de frases do Hero, substituído por uma barra horizontal elegante com quatro serviços clicáveis, posicionada na parte inferior do primeiro ecrã.
+- Melhorada a etiqueta acima do título, com detalhe luminoso discreto.
+- Mantidos anéis, grelha reativa, iluminação dinâmica e efeitos magnéticos da v0.3.1.
+- Adaptada a barra de serviços para duas colunas em ecrãs pequenos.
+
 ### v0.3.1 — Interactive Refinement (29/10/2026)
 - Removidos os dois cartões flutuantes do Hero, para recuperar espaço e dar destaque aos anéis.
 - Refinado o halo de luz que acompanha o cursor.
