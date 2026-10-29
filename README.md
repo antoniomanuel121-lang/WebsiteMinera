@@ -4,6 +4,13 @@ Website institucional Minera, desenvolvido com React, TypeScript, Vite e Motion.
 
 ## Histórico de versões
 
+### v0.3 — 29/10/2026
+- Mantidos os anéis animados originais como elemento principal do Hero.
+- Adicionados dois cartões flutuantes ilustrativos para mostrar websites e software (dados fictícios devidamente identificados).
+- Acrescentadas órbitas, pontos luminosos, grelha discreta e iluminação reativa ao rato.
+- Criado seletor interativo de quatro mensagens sobre os serviços.
+- Ajustes responsivos e respeito pela preferência de movimento reduzido.
+
 ### v0.2.1 — 29/10/2026
 - Corrigido erro de compilação TypeScript: removido import não utilizado `ChevronDown` em `src/App.tsx`.
 - Adicionado histórico de versões ao README.
