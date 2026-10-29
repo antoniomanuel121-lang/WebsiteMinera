@@ -146,3 +146,12 @@
 @keyframes digital-core-twinkle{0%,100%{filter:brightness(.7);opacity:.45}50%{filter:brightness(1.5);opacity:1}}
 @keyframes digital-core-flow{to{stroke-dashoffset:-160}}
 @media (prefers-reduced-motion:reduce){.digital-core-svg,.digital-core-orbit,.digital-core-spark,.digital-core-energy,.digital-core-neuron{animation:none}}
+
+/* v0.5.2 — clearer visual metaphors: URL chrome, unified work hub and AI brain. */
+.digital-core-web-details circle { fill:#7BB2FC; }
+.digital-core-data-dot { fill:#C5EBFF; filter:drop-shadow(0 0 3px #60AAFF); animation:core-data-pulse 1.9s ease-in-out infinite; }
+.digital-core-data-dot.delay-one { animation-delay:.45s; }
+.digital-core-data-dot.delay-two { animation-delay:.9s; }
+.digital-core-data-dot.delay-three { animation-delay:1.35s; }
+@keyframes core-data-pulse {0%,100%{opacity:.25}45%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.digital-core-data-dot{animation:none}}

@@ -1,3 +1,12 @@
+## v0.5.2 — Digital Core: formas mais claras · 29/10/2026
+
+- **Website:** barra superior com pontos de janela e campo de URL estilizado (`www.` e traços ilegíveis), mantendo a estrutura de browser.
+- **Software:** quatro módulos de tarefas convergem visualmente num único painel central, com linhas de fluxo e sinais de atividade.
+- **IA:** contorno de cérebro em dois hemisférios, com ligações neurais e pontos luminosos.
+- **Apps:** preservado o smartphone da v0.5.1.
+- Mantidos o ritmo e o espaço vertical das secções, as órbitas e a flutuação do Digital Core, e os anéis 3D originais do Hero.
+- As novas camadas visuais aparecem e desaparecem progressivamente com o scroll; desktop primeiro, mobile sem alterações.
+
 ## v0.5.1 — Digital Core refinado · 29/10/2026
 
 - Mais tempo para apreciar cada serviço: cartões/linhas de serviços mais altos no desktop.

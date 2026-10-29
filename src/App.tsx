@@ -14,45 +14,45 @@ const offerings = [
    It is separate from the original Hero rings, which are intentionally unchanged. */
 type Point = [number, number];
 const digitalShapes: Point[][][] = [
-  // Living seed: faceted energy crystal with inner diagonals.
+  // Original Digital Core.
   [
-    [[50,5],[79,19],[94,49],[79,81],[50,95],[21,81],[6,49],[21,19],[50,5]],
-    [[50,5],[50,95],[6,49],[94,49],[50,5],[21,81],[79,81],[50,95],[50,5]],
-    [[21,19],[79,19],[79,81],[21,81],[21,19],[50,49],[94,49],[50,95],[21,19]],
-    [[50,5],[79,19],[50,49],[21,19],[50,5],[79,81],[50,49],[21,81],[50,5]],
-    [[6,49],[21,19],[50,49],[79,19],[94,49],[79,81],[50,49],[21,81],[6,49]]
+    [[50,7],[76,17],[93,44],[83,77],[50,94],[18,78],[7,48],[22,19],[50,7]],
+    [[50,7],[50,94],[7,48],[93,44],[50,7],[18,78],[83,77],[50,94],[50,7]],
+    [[22,19],[76,17],[83,77],[18,78],[22,19],[50,46],[93,44],[50,94],[22,19]],
+    [[18,78],[50,7],[83,77],[18,78],[50,94],[93,44],[7,48],[50,7],[18,78]],
+    [[50,7],[22,19],[7,48],[18,78],[50,94],[83,77],[93,44],[76,17],[50,7]]
   ],
-  // Website: recognisable browser, header dots, hero card, text and sidebar.
+  // Website: unmistakable browser chrome, URL field, structured page content.
   [
-    [[7,14],[93,14],[93,86],[7,86],[7,14],[7,14],[7,14],[7,14],[7,14]],
-    [[7,30],[93,30],[93,30],[93,30],[93,30],[93,30],[93,30],[93,30],[93,30]],
-    [[14,41],[57,41],[57,70],[14,70],[14,41],[14,41],[14,41],[14,41],[14,41]],
-    [[65,41],[85,41],[85,47],[65,47],[65,41],[65,56],[85,56],[85,56],[85,56]],
-    [[15,22],[17,22],[17,22],[23,22],[25,22],[25,22],[31,22],[33,22],[33,22]]
+    [[5,17],[95,17],[95,84],[5,84],[5,17],[5,17],[5,17],[5,17],[5,17]],
+    [[5,34],[95,34],[95,34],[95,34],[95,34],[95,34],[95,34],[95,34],[95,34]],
+    [[12,43],[56,43],[56,52],[12,52],[12,43],[12,58],[56,58],[56,65],[12,65]],
+    [[65,43],[87,43],[87,72],[65,72],[65,43],[65,43],[65,43],[65,43],[65,43]],
+    [[12,75],[43,75],[43,75],[43,75],[43,75],[43,75],[43,75],[43,75],[43,75]]
   ],
-  // Software: four dashboard cards, side navigation and chart.
+  // Software: many workstreams converge into one central command hub.
   [
-    [[8,12],[92,12],[92,88],[8,88],[8,12],[8,12],[8,12],[8,12],[8,12]],
-    [[28,12],[28,88],[28,88],[28,88],[28,88],[28,88],[28,88],[28,88],[28,88]],
-    [[35,22],[60,22],[60,45],[35,45],[35,22],[35,22],[35,22],[35,22],[35,22]],
-    [[67,22],[85,22],[85,45],[67,45],[67,22],[67,22],[67,22],[67,22],[67,22]],
-    [[35,75],[42,62],[51,68],[61,55],[71,61],[82,51],[85,51],[85,79],[35,79]]
+    [[8,11],[30,11],[30,30],[8,30],[8,11],[8,11],[8,11],[8,11],[8,11]],
+    [[70,11],[92,11],[92,30],[70,30],[70,11],[70,11],[70,11],[70,11],[70,11]],
+    [[8,70],[30,70],[30,89],[8,89],[8,70],[8,70],[8,70],[8,70],[8,70]],
+    [[70,70],[92,70],[92,89],[70,89],[70,70],[70,70],[70,70],[70,70],[70,70]],
+    [[31,36],[69,36],[69,65],[31,65],[31,36],[31,36],[31,36],[31,36],[31,36]]
   ],
-  // AI: luminous neural constellation, interconnected layers and routes.
+  // AI: recognisable brain-like two-hemisphere neural outline.
   [
-    [[10,24],[35,12],[62,26],[88,11],[91,52],[73,79],[46,90],[13,73],[10,24]],
-    [[10,24],[38,47],[62,26],[73,79],[38,47],[13,73],[46,90],[91,52],[10,24]],
-    [[35,12],[38,47],[62,26],[91,52],[73,79],[46,90],[13,73],[35,12],[35,12]],
-    [[10,24],[62,26],[38,47],[88,11],[73,79],[38,47],[46,90],[13,73],[10,24]],
-    [[35,12],[88,11],[91,52],[46,90],[10,24],[73,79],[13,73],[62,26],[35,12]]
+    [[50,18],[40,11],[26,15],[19,25],[13,27],[9,41],[14,54],[10,65],[19,76]],
+    [[50,18],[60,11],[74,15],[81,25],[87,27],[91,41],[86,54],[90,65],[81,76]],
+    [[19,76],[27,86],[40,86],[50,80],[50,18],[50,35],[50,51],[50,67],[50,80]],
+    [[81,76],[73,86],[60,86],[50,80],[50,18],[50,35],[50,51],[50,67],[50,80]],
+    [[20,43],[35,36],[45,46],[30,61],[43,73],[58,64],[73,73],[80,49],[64,35]]
   ],
-  // Apps: retain recognisable phone silhouette and interface.
+  // Original app outline retained.
   [
     [[29,6],[71,6],[77,12],[77,88],[71,94],[29,94],[23,88],[23,12],[29,6]],
     [[42,15],[58,15],[58,15],[58,15],[58,15],[58,15],[58,15],[58,15],[58,15]],
     [[33,32],[67,32],[67,59],[33,59],[33,32],[34,70],[66,70],[66,78],[34,78]],
-    [[37,38],[63,38],[63,53],[37,53],[37,38],[37,38],[37,38],[37,38],[37,38]],
-    [[40,84],[60,84],[60,84],[60,84],[60,84],[60,84],[60,84],[60,84],[60,84]]
+    [[33,23],[67,23],[67,23],[67,23],[67,23],[67,23],[67,23],[67,23],[67,23]],
+    [[50,85],[50,85],[50,85],[50,85],[50,85],[50,85],[50,85],[50,85],[50,85]]
   ]
 ];
 const clamp01=(n:number)=>Math.min(1,Math.max(0,n));
@@ -120,6 +120,24 @@ function DigitalCore(){
     <svg viewBox="0 0 100 100" className="digital-core-svg">
       <defs><linearGradient id="digital-core-stroke" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#A9D6FF"/><stop offset=".5" stopColor="#478BFF"/><stop offset="1" stopColor="#2353B7"/></linearGradient></defs>
       {paths.map((d,i)=><path key={i} d={d} className={i===0?'digital-core-primary':'digital-core-trace'} fill="none" stroke="url(#digital-core-stroke)" strokeWidth={i===0?1.9:1.1} strokeLinejoin="round" strokeLinecap="round" opacity={1-i*.1}/>)}
+      <g className="digital-core-web-details" style={{opacity:clamp01(1-Math.abs(stage-1)*3)}}>
+        <circle cx="12" cy="25" r="1.2"/><circle cx="16" cy="25" r="1.2"/><circle cx="20" cy="25" r="1.2"/>
+        <rect x="26" y="21" width="60" height="9" rx="3" fill="#152B50" stroke="#80B6FF" strokeWidth=".65"/>
+        <text x="31" y="27.1" fontSize="4.4" letterSpacing=".25" fill="#A8D5FF">www.</text>
+        <path d="M45 26 H54 M56 26 H61 M63 26 H72 M74 26 H80" stroke="#91BAF7" strokeWidth="1.5" strokeLinecap="round" opacity=".75"/>
+      </g>
+      <g className="digital-core-software-details" style={{opacity:clamp01(1-Math.abs(stage-2)*3)}}>
+        <path d="M30 20 L50 40 L70 20 M30 79 L50 61 L70 79" stroke="#82BAFF" strokeWidth="1.2" strokeDasharray="3 2" fill="none"/>
+        <path d="M43 45 H57 M43 50 H55 M43 55 H59" stroke="#C2E7FF" strokeWidth="1.7" strokeLinecap="round"/>
+        <circle cx="50" cy="50" r="17" fill="none" stroke="#5395FF" strokeWidth=".6" opacity=".4"/>
+        <circle cx="50" cy="20" r="1.9" className="digital-core-data-dot"/><circle cx="80" cy="50" r="1.9" className="digital-core-data-dot delay-one"/>
+        <circle cx="50" cy="79" r="1.9" className="digital-core-data-dot delay-two"/><circle cx="20" cy="50" r="1.9" className="digital-core-data-dot delay-three"/>
+      </g>
+      <g className="digital-core-ai-details" style={{opacity:clamp01(1-Math.abs(stage-3)*3)}}>
+        <path d="M20 43 L35 36 L45 46 L30 61 L43 73 M80 49 L64 35 L58 64 L73 73 M35 36 L64 35 M45 46 L58 64" stroke="#80BBFF" strokeWidth=".85" fill="none" opacity=".7"/>
+        {([[20,43],[35,36],[45,46],[30,61],[43,73],[58,64],[73,73],[80,49],[64,35]] as Point[]).map(([x,y],i)=><circle key={i} cx={x} cy={y} r={i%3===0?2.2:1.4} fill="#BCE5FF" className="digital-core-neuron"/>)}
+        <path d="M50 19 V80" stroke="#C4E9FF" strokeWidth=".9" strokeDasharray="2 4" opacity=".5"/>
+      </g>
       <path d={paths[4]} className="digital-core-energy" fill="none" stroke="#C8E8FF" strokeWidth="1.5" strokeDasharray="2 14" strokeLinecap="round"/>
       {aiNodes.map((p,i)=><circle key={i} cx={p[0]} cy={p[1]} r={i%3===0?2.2:1.6} fill="#C2E8FF" opacity={aiAlpha} className="digital-core-neuron"/>)}
       <circle cx="50" cy="50" r="2.2" fill="#A6D2FF" opacity={Math.max(0,1-stage*2)}/>
