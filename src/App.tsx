@@ -14,35 +14,45 @@ const offerings = [
    It is separate from the original Hero rings, which are intentionally unchanged. */
 type Point = [number, number];
 const digitalShapes: Point[][][] = [
-  // Core: three faceted, orbit-like paths.
+  // Living seed: faceted energy crystal with inner diagonals.
   [
-    [[50,7],[76,17],[93,44],[83,77],[50,94],[18,78],[7,48],[22,19],[50,7]],
-    [[50,7],[50,94],[7,48],[93,44],[50,7],[18,78],[83,77],[50,94],[50,7]],
-    [[22,19],[76,17],[83,77],[18,78],[22,19],[50,46],[93,44],[50,94],[22,19]]
+    [[50,5],[79,19],[94,49],[79,81],[50,95],[21,81],[6,49],[21,19],[50,5]],
+    [[50,5],[50,95],[6,49],[94,49],[50,5],[21,81],[79,81],[50,95],[50,5]],
+    [[21,19],[79,19],[79,81],[21,81],[21,19],[50,49],[94,49],[50,95],[21,19]],
+    [[50,5],[79,19],[50,49],[21,19],[50,5],[79,81],[50,49],[21,81],[50,5]],
+    [[6,49],[21,19],[50,49],[79,19],[94,49],[79,81],[50,49],[21,81],[6,49]]
   ],
-  // Websites: browser outline, top bar, page structure.
+  // Website: recognisable browser, header dots, hero card, text and sidebar.
   [
-    [[9,18],[91,18],[91,83],[9,83],[9,18],[9,18],[9,18],[9,18],[9,18]],
-    [[9,32],[91,32],[91,32],[91,32],[91,32],[91,32],[91,32],[91,32],[91,32]],
-    [[18,44],[52,44],[52,53],[18,53],[18,44],[61,44],[81,44],[81,71],[61,71]]
+    [[7,14],[93,14],[93,86],[7,86],[7,14],[7,14],[7,14],[7,14],[7,14]],
+    [[7,30],[93,30],[93,30],[93,30],[93,30],[93,30],[93,30],[93,30],[93,30]],
+    [[14,41],[57,41],[57,70],[14,70],[14,41],[14,41],[14,41],[14,41],[14,41]],
+    [[65,41],[85,41],[85,47],[65,47],[65,41],[65,56],[85,56],[85,56],[85,56]],
+    [[15,22],[17,22],[17,22],[23,22],[25,22],[25,22],[31,22],[33,22],[33,22]]
   ],
-  // Software: connected system modules.
+  // Software: four dashboard cards, side navigation and chart.
   [
-    [[9,18],[44,18],[44,43],[9,43],[9,18],[56,57],[91,57],[91,84],[56,84]],
-    [[50,7],[50,32],[50,32],[50,32],[50,32],[50,69],[50,69],[50,69],[50,69]],
-    [[9,60],[42,60],[42,86],[9,86],[9,60],[58,13],[91,13],[91,39],[58,39]]
+    [[8,12],[92,12],[92,88],[8,88],[8,12],[8,12],[8,12],[8,12],[8,12]],
+    [[28,12],[28,88],[28,88],[28,88],[28,88],[28,88],[28,88],[28,88],[28,88]],
+    [[35,22],[60,22],[60,45],[35,45],[35,22],[35,22],[35,22],[35,22],[35,22]],
+    [[67,22],[85,22],[85,45],[67,45],[67,22],[67,22],[67,22],[67,22],[67,22]],
+    [[35,75],[42,62],[51,68],[61,55],[71,61],[82,51],[85,51],[85,79],[35,79]]
   ],
-  // AI and automation: connected neural nodes.
+  // AI: luminous neural constellation, interconnected layers and routes.
   [
-    [[13,50],[35,18],[62,29],[87,9],[74,59],[93,85],[55,91],[35,65],[13,50]],
-    [[13,50],[35,65],[62,29],[74,59],[35,18],[55,91],[87,9],[93,85],[13,50]],
-    [[35,18],[13,50],[55,91],[93,85],[74,59],[87,9],[62,29],[35,65],[35,18]]
+    [[10,24],[35,12],[62,26],[88,11],[91,52],[73,79],[46,90],[13,73],[10,24]],
+    [[10,24],[38,47],[62,26],[73,79],[38,47],[13,73],[46,90],[91,52],[10,24]],
+    [[35,12],[38,47],[62,26],[91,52],[73,79],[46,90],[13,73],[35,12],[35,12]],
+    [[10,24],[62,26],[38,47],[88,11],[73,79],[38,47],[46,90],[13,73],[10,24]],
+    [[35,12],[88,11],[91,52],[46,90],[10,24],[73,79],[13,73],[62,26],[35,12]]
   ],
-  // Apps: phone outline, speaker and screen controls.
+  // Apps: retain recognisable phone silhouette and interface.
   [
     [[29,6],[71,6],[77,12],[77,88],[71,94],[29,94],[23,88],[23,12],[29,6]],
     [[42,15],[58,15],[58,15],[58,15],[58,15],[58,15],[58,15],[58,15],[58,15]],
-    [[33,32],[67,32],[67,59],[33,59],[33,32],[34,70],[66,70],[66,78],[34,78]]
+    [[33,32],[67,32],[67,59],[33,59],[33,32],[34,70],[66,70],[66,78],[34,78]],
+    [[37,38],[63,38],[63,53],[37,53],[37,38],[37,38],[37,38],[37,38],[37,38]],
+    [[40,84],[60,84],[60,84],[60,84],[60,84],[60,84],[60,84],[60,84],[60,84]]
   ]
 ];
 const clamp01=(n:number)=>Math.min(1,Math.max(0,n));
@@ -60,21 +70,31 @@ function DigitalCore(){
       const sections=['websites','software','automacao','apps'].map(id=>document.getElementById(id));
       const services=document.getElementById('solucoes');
       if(!hero||!services||sections.some(x=>!x))return;
-      const y=window.scrollY+window.innerHeight*.54;
-      const heroEnd=hero.offsetTop+hero.offsetHeight;
-      const bounds=[heroEnd-window.innerHeight*.30,...sections.map(x=>x!.getBoundingClientRect().top+window.scrollY+Math.min(x!.offsetHeight*.42,window.innerHeight*.36))];
+      const y=window.scrollY+window.innerHeight*.52;
+      const heroEnd=hero.getBoundingClientRect().bottom+window.scrollY;
+      const centers=sections.map(el=>{const r=el!.getBoundingClientRect();return r.top+window.scrollY+r.height*.5});
+      // Hold each finished icon through most of its section; morph near the next section.
       let progress=0;
-      if(y>=bounds[4])progress=4;
-      else if(y>bounds[0]){
-        for(let i=0;i<4;i++)if(y<=bounds[i+1]){
-          progress=i+clamp01((y-bounds[i])/(bounds[i+1]-bounds[i]||1));
-          break;
+      const first=centers[0];
+      const firstStart=heroEnd-window.innerHeight*.12;
+      if(y<first){progress=clamp01((y-firstStart)/(first-firstStart||1));}
+      else {
+        progress=4;
+        for(let i=0;i<3;i++){
+          const a=centers[i], b=centers[i+1], gap=b-a;
+          if(y<b){
+            const transitionStart=a+gap*.62;
+            progress=i+1+clamp01((y-transitionStart)/(b-transitionStart||1));
+            break;
+          }
         }
       }
       setStage(progress);
       setHeroMode(window.scrollY<heroEnd-window.innerHeight*.25);
       const last=sections[3]!;
-      setVisible(window.innerWidth>=1100 && window.scrollY+window.innerHeight*.7 < last.getBoundingClientRect().bottom+window.scrollY && window.scrollY<heroEnd+services.offsetHeight);
+      const lastEnd=last.getBoundingClientRect().bottom+window.scrollY;
+      setVisible(window.innerWidth>=1100 && y<lastEnd+window.innerHeight*.12);
+
     };
     const onScroll=()=>{if(!raf)raf=requestAnimationFrame(update)};
     update();
@@ -90,11 +110,18 @@ function DigitalCore(){
       return `${x.toFixed(2)} ${y.toFixed(2)}`;
     }).join(' L ');
   });
+  const aiNodes: Point[]=[[10,24],[35,12],[62,26],[88,11],[91,52],[73,79],[46,90],[13,73],[38,47]];
+  const aiAlpha=clamp01(1-Math.abs(stage-3)*1.6);
   return <div className={`digital-core ${visible?'digital-core-visible':''} ${heroMode?'digital-core-hero':''}`} aria-hidden="true">
     <div className="digital-core-aura"/>
+    <div className="digital-core-orbit digital-core-orbit-a"/>
+    <div className="digital-core-orbit digital-core-orbit-b"/>
+    <span className="digital-core-spark digital-core-spark-one"/><span className="digital-core-spark digital-core-spark-two"/>
     <svg viewBox="0 0 100 100" className="digital-core-svg">
       <defs><linearGradient id="digital-core-stroke" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#A9D6FF"/><stop offset=".5" stopColor="#478BFF"/><stop offset="1" stopColor="#2353B7"/></linearGradient></defs>
-      {paths.map((d,i)=><path key={i} d={d} fill="none" stroke="url(#digital-core-stroke)" strokeWidth={i===0?1.65:1.15} strokeLinejoin="round" strokeLinecap="round" opacity={1-i*.15}/>)}
+      {paths.map((d,i)=><path key={i} d={d} className={i===0?'digital-core-primary':'digital-core-trace'} fill="none" stroke="url(#digital-core-stroke)" strokeWidth={i===0?1.9:1.1} strokeLinejoin="round" strokeLinecap="round" opacity={1-i*.1}/>)}
+      <path d={paths[4]} className="digital-core-energy" fill="none" stroke="#C8E8FF" strokeWidth="1.5" strokeDasharray="2 14" strokeLinecap="round"/>
+      {aiNodes.map((p,i)=><circle key={i} cx={p[0]} cy={p[1]} r={i%3===0?2.2:1.6} fill="#C2E8FF" opacity={aiAlpha} className="digital-core-neuron"/>)}
       <circle cx="50" cy="50" r="2.2" fill="#A6D2FF" opacity={Math.max(0,1-stage*2)}/>
     </svg>
     <span className="digital-core-caption">{['DIGITAL CORE','WEB','SOFTWARE','IA','APPS'][Math.round(stage)]}</span>

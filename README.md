@@ -1,3 +1,12 @@
+## v0.5.1 — Digital Core refinado · 29/10/2026
+
+- Mais tempo para apreciar cada serviço: cartões/linhas de serviços mais altos no desktop.
+- Transformações de scroll recalibradas: cada forma mantém-se durante a maior parte da respetiva secção.
+- Website com browser, barra superior, conteúdo e navegação; Software com painel, módulos e gráfico; IA com rede neural mais detalhada.
+- Forma de smartphone preservada e enriquecida com detalhes discretos.
+- Digital Core com flutuação, órbitas, pontos de luz, traços energizados e nós de IA; respeita a preferência por movimento reduzido.
+- Anéis originais do Hero e layout equilibrado mantidos.
+
 ## v0.5 — Digital Core (experimental) · 29/10/2026
 
 - Partindo da v0.3.3, preservámos integralmente os anéis originais, a luz do cursor, a grelha e os botões magnéticos.
