@@ -2,6 +2,17 @@
 
 ## Histórico de versões
 
+### v0.4 — Orbital Journey (29/10/2026)
+- Aumentada a largura útil do layout em ecrãs grandes para corrigir o excesso de espaço nas margens.
+- Mantidos os anéis originais, iluminação reativa, grelha e botões magnéticos.
+- Adicionada a primeira experiência de **Orbital Journey**: assinatura luminosa na margem esquerda, revelada pelo scroll, com quatro formas SVG (browser, software, rede de IA e smartphone) que mudam conforme a secção.
+- Animação reversível ao subir a página, desativada em ecrãs pequenos e para utilizadores com preferência por movimento reduzido.
+- **Protótipo:** nesta iteração, a passagem dos anéis para a linha é uma transição visual; a geometria dos anéis ainda não se transforma literalmente no traço. A continuidade e o posicionamento serão afinados após avaliação no browser.
+
+# MINERA — Website
+
+## Histórico de versões
+
 ### v0.3.2 — 29/10/2026 — Hero / Tipografia & Navegação
 - Introduzida a fonte Satoshi no Hero, com fallback para fontes de sistema.
 - Refinados peso, tamanho, espaçamento e hierarquia do título e da descrição.
