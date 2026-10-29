@@ -85,3 +85,13 @@ npm run build
 - Refinar o hero e a experiência de navegação.
 - Desenvolver experiências visuais nas quatro áreas de negócio.
 - Substituir conteúdos provisórios e configurar contacto real antes do lançamento.
+
+
+## v0.4.2 — Persistent Orbital Transformation (29/10/2026)
+- Substituída a sobreposição de novas linhas por **um único SVG persistente**: as próprias trajetórias dos anéis deformam-se até formar o browser.
+- Anéis permanecem visíveis durante a saída do Hero; transformação progressiva ao longo de ~1,6 ecrãs e reversível com scroll.
+- Volume e brilho dos anéis diminuem enquanto as linhas se tornam o desenho do browser.
+- Mantidos os efeitos anteriores e a versão original dos anéis como fallback em telemóveis/redução de movimento.
+- Reforçada a largura comum dos contentores em desktop.
+
+**Nota de protótipo:** o browser é formado pelas mesmas trajetórias SVG, mas a geometria tridimensional original em CSS é aproximada por gradientes SVG. A fidelidade visual e o timing precisam de validação no browser real. As outras formas (Software, IA, Apps) ficam para uma próxima iteração.
