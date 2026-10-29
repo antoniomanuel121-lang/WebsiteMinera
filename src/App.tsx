@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowUpRight, ArrowRight, Menu, X, Globe2, Layers3, Workflow, Smartphone, MoveUpRight, Check, ChevronDown, Mail, ExternalLink } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Menu, X, Globe2, Layers3, Workflow, Smartphone, MoveUpRight, Check, Mail, ExternalLink } from 'lucide-react';
 
 const offerings = [
   {number:'01', label:'PRESENÇA DIGITAL', title:'Websites que deixam marca.', desc:'A primeira impressão do seu negócio merece mais do que um template. Criamos experiências digitais que transmitem confiança e convidam à ação.', tags:['Websites institucionais','Lojas online','Experiências interativas'], icon:Globe2, id:'websites'},
