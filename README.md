@@ -1,5 +1,18 @@
 # MINERA — Website
 
+## v0.4.1 — 29/10/2026 · Orbital Morph Prototype
+
+- Corrigido o desalinhamento global: removido o recuo artificial da secção Soluções e uniformizada a largura das secções em desktop.
+- Substituída a linha independente da v0.4 por **três trajetórias SVG que interpolam geometricamente** entre órbitas e o contorno de um browser.
+- A interpolação e o movimento horizontal respondem à posição do scroll, incluindo o movimento inverso ao subir.
+- Os anéis 3D originais mantêm-se no Hero e desvanecem durante a passagem para as trajetórias.
+- Mantidos os efeitos de cursor, grelha e botões magnéticos.
+- Em ecrãs menores e com movimento reduzido, o efeito experimental não é apresentado.
+
+**Limitação consciente:** esta versão testa a primeira transformação (anéis → browser). Ainda não há morph contínuo entre browser, software, IA e smartphone. O efeito usa uma representação SVG das órbitas para transitar do elemento 3D para linhas 2D.
+
+# MINERA — Website
+
 ## Histórico de versões
 
 ### v0.4 — Orbital Journey (29/10/2026)

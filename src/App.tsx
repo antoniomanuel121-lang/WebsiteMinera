@@ -15,55 +15,52 @@ const heroServices = [{number:'01',title:'Websites',id:'websites'},{number:'02',
 function MagneticLink({className,href,children}:{className:string;href:string;children:React.ReactNode}){const ref=useRef<HTMLAnchorElement>(null);const reduce=useReducedMotion();return <a ref={ref} className={`${className} minera-magnetic`} href={href} onPointerMove={e=>{if(reduce||e.pointerType==='touch')return;const el=ref.current;if(!el)return;const r=el.getBoundingClientRect();const dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);el.style.setProperty('--mag-x',`${dx*.16}px`);el.style.setProperty('--mag-y',`${dy*.22}px`);el.style.setProperty('--shine-x',`${e.clientX-r.left}px`);}} onPointerLeave={()=>{const el=ref.current;if(!el)return;el.style.setProperty('--mag-x','0px');el.style.setProperty('--mag-y','0px')}}>{children}</a>}
 function Hero(){const reduce=useReducedMotion();const heroRef=useRef<HTMLElement>(null);return <section id="inicio" className="hero hero-v2" ref={heroRef} onPointerMove={e=>{if(reduce||e.pointerType==='touch')return;const r=e.currentTarget.getBoundingClientRect();const x=e.clientX-r.left,y=e.clientY-r.top;const el=e.currentTarget;el.style.setProperty('--cursor-x',`${x}px`);el.style.setProperty('--cursor-y',`${y}px`);el.style.setProperty('--tilt-x',`${((y/r.height)-.5)*-10}deg`);el.style.setProperty('--tilt-y',`${((x/r.width)-.5)*10}deg`);el.style.setProperty('--orb-x',`${((x/r.width)-.5)*25}px`);el.style.setProperty('--orb-y',`${((y/r.height)-.5)*25}px`);}} onPointerLeave={e=>{const el=e.currentTarget;el.style.setProperty('--tilt-x','0deg');el.style.setProperty('--tilt-y','0deg');el.style.setProperty('--orb-x','0px');el.style.setProperty('--orb-y','0px');}}><div className="hero-v2-noise" aria-hidden="true"/><div className="hero-v2-aura" aria-hidden="true"/><div className="hero-v3-grid" aria-hidden="true"/><div className="hero-v3-cursor-glow" aria-hidden="true"/><div className="hero-v31-grid-reactive" aria-hidden="true"/><div className="hero-v2-container container"><motion.div className="hero-v2-topline" initial={reduce?false:{opacity:0,y:15}} animate={{opacity:1,y:0}} transition={{duration:.7}}><span className="hero-v2-line"/><span>ESTÚDIO DIGITAL · PORTUGAL</span><span className="hero-v2-topright">WE BUILD WHAT'S NEXT <ArrowUpRight size={14}/></span></motion.div><div className="hero-v2-stage"><motion.div className="hero-v2-content" initial={reduce?false:{opacity:0,y:42}} animate={{opacity:1,y:0}} transition={{duration:.9,delay:.12}}><div className="hero-v2-overline"><span className="status-dot"/><span>ESTÚDIO CRIATIVO & TECNOLÓGICO</span><span className="hero-v32-overline-rule"/></div><h1>Tecnologia<br/><span className="hero-v2-outline">avançada.</span><br/><span className="hero-v2-highlight">Soluções</span> simples<span className="hero-v2-period">.</span></h1><div className="hero-v2-bottom"><p>Transformamos ideias ambiciosas em experiências digitais que fazem os negócios avançar. Websites, software, automação e aplicações — pensados para si.</p><div className="hero-v2-buttons"><MagneticLink className="hero-v2-primary" href="#solucoes">Explorar soluções <ArrowUpRight size={19}/></MagneticLink><MagneticLink className="hero-v2-secondary" href="#contacto">Falar sobre um projeto <ArrowRight size={17}/></MagneticLink></div></div></motion.div><motion.div className="hero-v2-sculpture" initial={reduce?false:{opacity:0,scale:.75,rotate:-15}} animate={{opacity:1,scale:1,rotate:0}} transition={{duration:1.3,delay:.3,type:'spring',bounce:.12}}  aria-hidden="true"><div className="hero-v31-sculpture-tilt"><div className="hero-v2-sculpture-halo"/><div className="hero-v3-orbit orbit-one"/><div className="hero-v3-orbit orbit-two"/><div className="hero-v3-spark spark-one"/><div className="hero-v3-spark spark-two"/><div className="hero-v3-spark spark-three"/><div className="hero-v2-ring ring-a"/><div className="hero-v2-ring ring-b"/><div className="hero-v2-ring ring-c"/><div className="hero-v2-core"><div className="hero-v2-core-inner"/></div><div className="hero-v2-orb orb-a"/><div className="hero-v2-orb orb-b"/><div className="hero-v2-orb orb-c"/></div></motion.div></div><nav className="hero-v32-service-bar" aria-label="Explorar as áreas da Minera"><div className="hero-v32-bar-heading"><span className="hero-v32-bar-signal"/><span>O QUE FAZEMOS</span><span className="hero-v32-bar-count">01 — 04</span></div><div className="hero-v32-service-links">{heroServices.map(s=><a href={`#${s.id}`} className="hero-v32-service-link" key={s.id}><span className="hero-v32-service-number">{s.number}</span><span className="hero-v32-service-title">{s.title}</span><ArrowUpRight size={16} strokeWidth={1.6}/></a>)}</div></nav><div className="hero-v2-footer"><a href="#solucoes" className="hero-v2-scroll"><span className="hero-v2-scroll-icon">↓</span> DESLIZE PARA EXPLORAR</a><div className="hero-v2-footer-right">ESTRATÉGIA <span>✳</span> DESIGN <span>✳</span> TECNOLOGIA</div></div></div><div className="hero-v2-edge" aria-hidden="true">M / 001 — DIGITAL EXPERIENCES</div></section>}
 
-// A fixed, decorative SVG journey. Scroll progress is read once per animation frame.
-// No extra scroll containers: moving down and up reverses the same timeline.
+// v0.4.1 — The orbital paths themselves interpolate into a browser outline.
+// The same SVG geometry is driven by scroll in both directions; no stage swapping.
+const clamp=(n:number)=>Math.max(0,Math.min(1,n));
+const ease=(n:number)=>{const t=clamp(n);return t*t*(3-2*t)};
+const N=96;
+function ringPoints(i:number){return Array.from({length:N},(_,j)=>{const a=j/N*Math.PI*2,rot=[-.55,.75,1.55][i];const x=Math.cos(a)*(104-i*15),y=Math.sin(a)*(48+i*14);return [x*Math.cos(rot)-y*Math.sin(rot),x*Math.sin(rot)+y*Math.cos(rot)] as [number,number]})}
+function browserPoints(i:number){return Array.from({length:N},(_,j)=>{const u=j/N*4;let x=0,y=0;const w=104,h=74; if(u<1){x=-w+u*2*w;y=-h}else if(u<2){x=w;y=-h+(u-1)*2*h}else if(u<3){x=w-(u-2)*2*w;y=h}else{x=-w;y=h-(u-3)*2*h}if(i===1){y=-h*.64+(y+h)*.12}if(i===2){x*=.66;y=y*.42+24}return [x,y] as [number,number]})}
+const sourcePaths=[0,1,2].map(ringPoints);
+const targetPaths=[0,1,2].map(browserPoints);
+function interpolatePath(i:number,p:number){const t=ease(p);return sourcePaths[i].map(([x,y],j)=>{const [tx,ty]=targetPaths[i][j];return `${j?'L':'M'}${(x+(tx-x)*t).toFixed(1)},${(y+(ty-y)*t).toFixed(1)}`}).join(' ')+' Z'}
 function OrbitalJourney(){
   const ref=useRef<HTMLDivElement>(null);
   useEffect(()=>{
     const el=ref.current;
-    if(!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.matchMedia('(max-width: 900px)').matches)return;
+    if(!el||window.matchMedia('(prefers-reduced-motion: reduce)').matches||window.matchMedia('(max-width: 1099px)').matches)return;
+    const paths=Array.from(el.querySelectorAll<SVGPathElement>('.morph-path'));
+    const sculpture=document.querySelector<HTMLElement>('.hero-v2-sculpture');
+    const hero=document.getElementById('inicio');const services=document.getElementById('solucoes');
+    if(!hero||!services)return;
     let raf=0;
     const update=()=>{
       raf=0;
-      const hero=document.getElementById('inicio');
-      const services=document.getElementById('solucoes');
-      const end=document.getElementById('projetos');
-      if(!hero||!services||!end)return;
-      const y=window.scrollY;
-      const vh=window.innerHeight;
-      const heroEnd=hero.offsetTop+hero.offsetHeight;
-      const start=Math.max(0,heroEnd-vh*.65);
-      const reveal=Math.min(1,Math.max(0,(y-start)/(vh*.8)));
-      const disappear=Math.min(1,Math.max(0,(y-(end.offsetTop-vh*.6))/(vh*.5)));
-      const rows=Array.from(document.querySelectorAll<HTMLElement>('.service-row'));
-      let stage=0;
-      rows.forEach((row,i)=>{if(row.getBoundingClientRect().top<vh*.55)stage=i;});
-      el.style.setProperty('--journey-opacity',String(reveal*(1-disappear)));
-      el.style.setProperty('--journey-rise',`${(1-reveal)*-50}px`);
-      el.dataset.stage=String(stage);
-      const symbol=el.querySelector<SVGElement>('.journey-symbol');
-      if(symbol){symbol.style.transform=`translateY(${Math.sin(y*.002)*5}px)`;}
+      const y=window.scrollY,vh=window.innerHeight;
+      const start=90;
+      const finish=Math.max(start+300,services.offsetTop-vh*.42);
+      const progress=clamp((y-start)/(finish-start));
+      const t=ease(progress);
+      const sourceX=window.innerWidth*.74,sourceY=vh*.47;
+      const contentLeft=Math.max(34,(window.innerWidth-Math.min(1480,window.innerWidth-112))/2);
+      const destX=contentLeft+86,destY=vh*.47;
+      el.style.left=`${sourceX+(destX-sourceX)*t}px`;
+      el.style.top=`${sourceY+(destY-sourceY)*t}px`;
+      const opacity=clamp((y-55)/95);
+      const servicesEnd=document.getElementById('projetos')?.offsetTop??Infinity;
+      const fadeOut=1-clamp((y-(servicesEnd-vh*.65))/(vh*.55));
+      el.style.opacity=String(opacity*fadeOut);
+      el.style.transform=`translate(-50%,-50%) scale(${1-.43*t})`;
+      el.style.setProperty('--morph-progress',String(t));
+      paths.forEach((path,i)=>path.setAttribute('d',interpolatePath(i,progress)));
+      if(sculpture)sculpture.style.opacity=String(1-clamp((y-65)/155));
     };
-    const onScroll=()=>{if(!raf)raf=requestAnimationFrame(update)};
-    window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll);update();
-    return()=>{window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll);if(raf)cancelAnimationFrame(raf)};
+    const schedule=()=>{if(!raf)raf=requestAnimationFrame(update)};
+    window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);update();
+    return()=>{window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);if(raf)cancelAnimationFrame(raf);if(sculpture)sculpture.style.opacity=''};
   },[]);
-  return <div ref={ref} className="orbital-journey" data-stage="0" aria-hidden="true">
-    <div className="journey-track"/>
-    <svg viewBox="0 0 170 310" className="journey-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="journeyBlue" x1="0" y1="0" x2="170" y2="310" gradientUnits="userSpaceOnUse"><stop stopColor="#B5DBFF"/><stop offset=".45" stopColor="#538DFF"/><stop offset="1" stopColor="#244B9B"/></linearGradient><filter id="journeyGlow"><feGaussianBlur stdDeviation="5"/></filter></defs>
-      <path d="M84 0 V70 Q84 88 64 100 L42 112" stroke="url(#journeyBlue)" strokeWidth="2" strokeOpacity=".5"/>
-      <g className="journey-symbol">
-        <g className="journey-stage journey-stage-0"><rect x="18" y="111" width="132" height="92" rx="8" stroke="url(#journeyBlue)" strokeWidth="2"/><path d="M18 134H150" stroke="#7EAFFF" strokeOpacity=".8"/><circle cx="30" cy="123" r="2.5" fill="#9BC7FF"/><circle cx="40" cy="123" r="2.5" fill="#9BC7FF"/><path d="M39 158H97M39 171H124M39 183H83" stroke="#739BE6" strokeWidth="3" strokeLinecap="round"/></g>
-        <g className="journey-stage journey-stage-1"><rect x="58" y="116" width="56" height="37" rx="6" stroke="url(#journeyBlue)" strokeWidth="2"/><rect x="12" y="185" width="53" height="36" rx="6" stroke="url(#journeyBlue)" strokeWidth="2"/><rect x="107" y="185" width="53" height="36" rx="6" stroke="url(#journeyBlue)" strokeWidth="2"/><path d="M86 153V169M86 169H39V185M86 169H134V185" stroke="#85B8FF" strokeWidth="2"/><circle cx="86" cy="169" r="5" fill="#A9D4FF"/></g>
-        <g className="journey-stage journey-stage-2"><path d="M84 115L29 151L45 208L119 214L150 153L84 115ZM29 151L119 214M45 208L150 153M84 115L45 208" stroke="#6298FF" strokeWidth="1.5"/>{[[84,115],[29,151],[45,208],[119,214],[150,153],[88,171]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r={i===5?8:5} fill="#9FCBFF"/>)}</g>
-        <g className="journey-stage journey-stage-3"><rect x="53" y="105" width="66" height="127" rx="14" stroke="url(#journeyBlue)" strokeWidth="3"/><path d="M75 118H97" stroke="#A7D4FF" strokeWidth="3" strokeLinecap="round"/><rect x="64" y="140" width="44" height="31" rx="5" stroke="#6A9EFA"/><path d="M64 185H108M64 196H95" stroke="#8DBBFF" strokeWidth="3" strokeLinecap="round"/><circle cx="86" cy="220" r="3" fill="#B6DAFF"/></g>
-      </g>
-      <path d="M84 244 V310" stroke="url(#journeyBlue)" strokeWidth="2" strokeOpacity=".55"/>
-      <circle className="journey-pulse" cx="84" cy="265" r="4" fill="#C7E8FF"/>
-    </svg>
-    <span className="journey-label">MINERA / DIGITAL FLOW</span>
-  </div>;
+  return <div className="orbital-morph" ref={ref} aria-hidden="true"><svg viewBox="-125 -100 250 200" xmlns="http://www.w3.org/2000/svg" fill="none"><defs><linearGradient id="morphBlue" x1="-110" y1="-90" x2="110" y2="90" gradientUnits="userSpaceOnUse"><stop stopColor="#C6E6FF"/><stop offset=".5" stopColor="#659DFF"/><stop offset="1" stopColor="#315FD2"/></linearGradient></defs>{[0,1,2].map(i=><path key={i} className="morph-path" d={interpolatePath(i,0)} stroke="url(#morphBlue)" strokeWidth={i===0?2.5:1.8} opacity={1-i*.2} strokeLinejoin="round"/>)}<circle r="3" fill="#B7D9FF" className="morph-center"/></svg><span className="morph-caption">MINERA / DIGITAL FLOW</span></div>;
 }
 function ServiceVisual({id}:{id:string}){if(id==='websites')return <div className="service-art website-art"><div className="mock-browser"><div className="mock-top"><span>● ● ●</span><span>atelier.pt</span><span>↗</span></div><div className="mock-content"><span>ATELIER / DESIGN & ARQUITETURA</span><strong>Espaços com<br/><em>identidade.</em></strong><div className="mock-image"><div className="architecture"/></div><span className="mock-link">CONHECER PROJETOS ↗</span></div></div><div className="art-badge">DESIGN QUE CONVERTE <MoveUpRight size={13}/></div></div>;
 if(id==='software')return <div className="service-art software-art"><div className="software-panel"><div className="software-heading"><span>◈ &nbsp; Painel de gestão</span><span>● Em dia</span></div><div className="software-stats"><div><small>Pedidos ativos</small><strong>32</strong></div><div><small>Clientes</small><strong>148</strong></div><div><small>Concluídos</small><strong>86%</strong></div></div><div className="software-table"><div><span>PROJETO</span><span>ESTADO</span></div><div><span>Encomenda #1042</span><b>Em curso</b></div><div><span>Encomenda #1041</span><b className="done">Concluído</b></div><div><span>Encomenda #1040</span><b>Em curso</b></div></div></div></div>;
