@@ -1,5 +1,18 @@
 # MINERA — Website
 
+## Histórico de versões
+
+### v0.3.1 — Interactive Refinement (29/10/2026)
+- Removidos os dois cartões flutuantes do Hero, para recuperar espaço e dar destaque aos anéis.
+- Refinado o halo de luz que acompanha o cursor.
+- Adicionada grelha subtil que se ilumina perto do cursor.
+- Adicionada inclinação suave e efeito de profundidade ao conjunto de anéis.
+- Adicionados movimentos magnéticos e brilho discreto aos botões principais.
+- Melhorias para dispositivos táteis e preferência de movimento reduzido.
+- Mantidas as restantes secções e o fluxo de publicação do GitHub Pages.
+
+## Notas da versão anterior — MINERA — Website
+
 Website institucional Minera, desenvolvido com React, TypeScript, Vite e Motion.
 
 ## Histórico de versões
