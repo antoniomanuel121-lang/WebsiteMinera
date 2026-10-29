@@ -1,36 +1,12 @@
-## v0.4.2.1 — Correção de compilação (29/10/2026)
-
-- Corrigidos os avisos de TypeScript sobre referências potencialmente nulas (`el` e `services`) na animação Orbital Journey.
-- Sem alterações intencionais ao design ou à animação da v0.4.2.
-- Publicação: carregar o conteúdo de `minera-site` na raiz do repositório e verificar GitHub Actions.
-
-# MINERA — Website
-
-## v0.4.1 — 29/10/2026 · Orbital Morph Prototype
-
-- Corrigido o desalinhamento global: removido o recuo artificial da secção Soluções e uniformizada a largura das secções em desktop.
-- Substituída a linha independente da v0.4 por **três trajetórias SVG que interpolam geometricamente** entre órbitas e o contorno de um browser.
-- A interpolação e o movimento horizontal respondem à posição do scroll, incluindo o movimento inverso ao subir.
-- Os anéis 3D originais mantêm-se no Hero e desvanecem durante a passagem para as trajetórias.
-- Mantidos os efeitos de cursor, grelha e botões magnéticos.
-- Em ecrãs menores e com movimento reduzido, o efeito experimental não é apresentado.
-
-**Limitação consciente:** esta versão testa a primeira transformação (anéis → browser). Ainda não há morph contínuo entre browser, software, IA e smartphone. O efeito usa uma representação SVG das órbitas para transitar do elemento 3D para linhas 2D.
-
 # MINERA — Website
 
 ## Histórico de versões
 
-### v0.4 — Orbital Journey (29/10/2026)
-- Aumentada a largura útil do layout em ecrãs grandes para corrigir o excesso de espaço nas margens.
-- Mantidos os anéis originais, iluminação reativa, grelha e botões magnéticos.
-- Adicionada a primeira experiência de **Orbital Journey**: assinatura luminosa na margem esquerda, revelada pelo scroll, com quatro formas SVG (browser, software, rede de IA e smartphone) que mudam conforme a secção.
-- Animação reversível ao subir a página, desativada em ecrãs pequenos e para utilizadores com preferência por movimento reduzido.
-- **Protótipo:** nesta iteração, a passagem dos anéis para a linha é uma transição visual; a geometria dos anéis ainda não se transforma literalmente no traço. A continuidade e o posicionamento serão afinados após avaliação no browser.
-
-# MINERA — Website
-
-## Histórico de versões
+### v0.3.3 — 29/10/2026 — Layout equilibrado
+- Base restaurada da v0.3.2, com os anéis 3D originais e todos os efeitos do Hero preservados.
+- Largura e margens unificadas entre navegação, Hero e restantes secções.
+- Proporções ajustadas nas linhas dos serviços para reduzir espaços vazios.
+- Mantido o comportamento responsivo. Nenhuma animação de transformação dos anéis.
 
 ### v0.3.2 — 29/10/2026 — Hero / Tipografia & Navegação
 - Introduzida a fonte Satoshi no Hero, com fallback para fontes de sistema.
@@ -91,13 +67,3 @@ npm run build
 - Refinar o hero e a experiência de navegação.
 - Desenvolver experiências visuais nas quatro áreas de negócio.
 - Substituir conteúdos provisórios e configurar contacto real antes do lançamento.
-
-
-## v0.4.2 — Persistent Orbital Transformation (29/10/2026)
-- Substituída a sobreposição de novas linhas por **um único SVG persistente**: as próprias trajetórias dos anéis deformam-se até formar o browser.
-- Anéis permanecem visíveis durante a saída do Hero; transformação progressiva ao longo de ~1,6 ecrãs e reversível com scroll.
-- Volume e brilho dos anéis diminuem enquanto as linhas se tornam o desenho do browser.
-- Mantidos os efeitos anteriores e a versão original dos anéis como fallback em telemóveis/redução de movimento.
-- Reforçada a largura comum dos contentores em desktop.
-
-**Nota de protótipo:** o browser é formado pelas mesmas trajetórias SVG, mas a geometria tridimensional original em CSS é aproximada por gradientes SVG. A fidelidade visual e o timing precisam de validação no browser real. As outras formas (Software, IA, Apps) ficam para uma próxima iteração.
